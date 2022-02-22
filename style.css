@@ -1,3 +1,18 @@
 #root {
-  color: red;
+  background: cadetblue;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+
+}
+.card {
+  background-color: wheat;
+  margin: 1rem;
+  width: 300px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
