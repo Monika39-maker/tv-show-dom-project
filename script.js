@@ -1,6 +1,9 @@
 const root = document.getElementById('root')
 const allEpisodeList = getAllEpisodes();
 let episodeNumber;
+
+const movieCard = root.contentEditable.cloneNode(true);
+console.log(movieCard)
 // console.log(allEpisodeList)
 for (let i=0; i<allEpisodeList.length; i++) {
   const card = document.createElement('div');
@@ -17,7 +20,7 @@ for (let i=0; i<allEpisodeList.length; i++) {
   } else {
     episodeNumber = allEpisodeList[i].number;
   }
-  console.log(episodeNumber)
+  
 
   title.innerText = `${allEpisodeList[i].name} - S0${seasonNumber}E${episodeNumber}`
   
@@ -26,9 +29,21 @@ for (let i=0; i<allEpisodeList.length; i++) {
   
   
   
-  const summary = document.createElement('div');
-  summary.innerHTML = `${(allEpisodeList[i].summary)}`
+  const summary = document.createElement('p');
+  summary.innerText = `${(allEpisodeList[i].summary).replace('<p>', '').replace('</p>', '')}`
   
+  const searchInput = document.getElementById('search')
+  searchInput.addEventListener('input', () => {
+    let query = searchInput.value;
+    if ((allEpisodeList[i].name).includes(query)) {
+      console.log(allEpisodeList[i].name)
+    }
+      
+    
+    
+
+  })
+
   card.appendChild(title);
   card.appendChild(image)
   
@@ -37,6 +52,9 @@ for (let i=0; i<allEpisodeList.length; i++) {
   
  
   root.appendChild(card)
+
+  
+  
 
 }
 
