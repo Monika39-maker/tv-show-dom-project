@@ -16,3 +16,12 @@
   justify-content: center;
   align-items: center;
 }
+.header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.hide {
+  display: none;
+}
