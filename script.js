@@ -1,154 +1,242 @@
 const root = document.getElementById('root');
-// const allEpisodes = getAllEpisodes();
-const episodesSelectEl = document.getElementById('episodes')
-let episodeNumber;
-let searchValue = '';
-const searchInput = document.getElementById('search');
-const movieNumberPara = document.getElementById('number-of-display');
+// const allEpisodesHeader = document.querySelector('#all-episodes-header');
+const allShowsHeader = document.querySelector('#header');
+const searchEl = document.getElementById('search') 
+const selectShowsEl = document.getElementById('shows') 
+let displayNumberEl = document.getElementById('displayNumber')
+ 
 
 
 
-// loadTheMovies(allEpisodes)
-
-fetch('https://api.tvmaze.com/shows/82/episodes')
-.then(resp => resp.json())
-.then(data => {
-  loadTheMovies(data);
+fetchAndRenderAllShows();
 
 
 
-  // function load all episodes as individual movie card with title, image, summary and the values of the seclect option
-  function loadTheMovies(movieList) {
-    root.innerHTML = " "
-    for (let i=0; i<movieList.length; i++) {
-      
-      //card div to contain all the information of a movie
-      const card = document.createElement('div');
-      card.classList.add('card');
-      
-      // movie title 
-      const title = document.createElement('h3');
-      const seasonNumber = movieList[i].season;
-      episodeNumber = movieList[i].number
-      
-      if (episodeNumber < Number(10)) {
-        episodeNumber = '0' + movieList[i].number
-      } else {
-        episodeNumber = movieList[i].number;
-      }
-      
 
-      title.innerText = `${movieList[i].name} - S0${seasonNumber}E${episodeNumber}`
-      title.classList.add('title')
-
-      //image
-      const image = document.createElement('img');
-      image.src = `${movieList[i].image['medium']}`
-      
-      
-      //summary of each movie
-      const summary = document.createElement('p');
-      summary.innerText = `${(movieList[i].summary).replace('<p>', '').replace('</p>', '')}`
-      summary.classList.add('summary')
-      
-      // add the title, image and summary to each card div
-      card.appendChild(title);
-      card.appendChild(image)
-      card.appendChild(summary);
-
-
-      const option = document.createElement('option');
-      option.value = title.innerText;
-      option.innerText = title.innerText;
-      episodesSelectEl.appendChild(option);
-
-      movieNumberPara.innerText = `${movieList.length}/${data.length}`
-        
-      
-      //add individual card to the main root element
-      root.appendChild(card);
-    }  
-  }
-
-
+async function fetchAndRenderAllShows() {
+    const response = await fetch('https://api.tvmaze.com/shows');
+    const responseData = await response.json();
     
-  // apply this function to search on keyup event below
-  function filterMovieCardOnSearch(str) {
+    const allShows = responseData;
+    // allShows[0] = 'All'
+    displayNumberEl.textContent = `The total number of display: ${allShows.length}`
+    renderAllShows(allShows);
+    showEpisodesOfSelectedShow(allShows);
     
-    return  data.filter(episode => {
-      return episode = (episode['name'].toLowerCase()).includes(str.toLowerCase()) || (episode['summary'].toLocaleLowerCase()).includes(str.toLowerCase())
-    })
-    
-  }
 
+}
 
-  //key event for the searchbox
-  searchInput.addEventListener('keyup', () => {
-    searchValue = searchInput.value;
-    let filteredMovies = filterMovieCardOnSearch(searchValue);
-    loadTheMovies(filteredMovies)
-    
-  });
+async function fetchAndRenderAllEpisodesByShowID(id) {
+  const response = await fetch(`https://api.tvmaze.com/shows/${id}/episodes`);
+  const theShowEpisodes = await response.json();
+  displayNumberEl.textContent = `The total number of display: ${theShowEpisodes.length}`
+  renderAllEpisodesFromAShow(theShowEpisodes)
+}
 
-  function filterMovieCardOnSelect(str) {
-    
-    return  data.filter(episode => {
-      let seasonNumber = episode.season;
-      let episodeNumber = episode.number
-      
-      if (episodeNumber < Number(10)) {
-        episodeNumber = '0' + episode.number
-      } else {
-        episodeNumber = episode.number;
-      }
-      
+function renderAllEpisodesFromAShow(data) {
+  root.innerHTML = ""
+  const episodeEl = document.createElement('div')
+  const backBtn = document.createElement('button');
+  backBtn.innerText = "Go Back"
+  episodeEl.appendChild(backBtn);
 
-      let searchStr = ` - S0${seasonNumber}E${episodeNumber}`;
-      str = str.replace(searchStr, '');
-      console.log(str.length)
-      episode['name'].length
-      return (episode['name']).includes(str)
-    })
-    
-  }
-
-
-
-  episodesSelectEl.addEventListener('change', (e) => {
-    
-    searchValue = e.target.value;
-    let filteredMoviesOnSelect = filterMovieCardOnSelect(searchValue)
-    
-    loadTheMovies(filteredMoviesOnSelect)
+  backBtn.addEventListener('click', () => {
+    episodeEl.classList.add('hide');
+    fetchAndRenderAllShows()
   })
 
+    //select option and searchBar in the episodes div
+          const header = document.createElement('div');
+          header.classList.add('header');
+          const selectShowOption = document.createElement('select');
+          selectShowOption.name = 'shows';
+          selectShowOption.id = 'selectShows';
+
+          header.appendChild(selectShowOption);
+          episodeEl.appendChild(header);
+
+
+      for (let i=0; i<data.length; i++) {
+              const showEl = document.querySelector('#shows');
+              
+              //card div to contain all the information of a movie
+              const card = document.createElement('div');
+              card.classList.add('card');
+              
+              // movie title 
+              const title = document.createElement('h3');
+              const seasonNumber = data[i].season;
+              episodeNumber = data[i].number
+              
+              if (episodeNumber < Number(10)) {
+                episodeNumber = '0' + data[i].number
+              } else {
+                episodeNumber = data[i].number;
+              }
+              
+
+              title.innerText = `${data[i].name} - SE${seasonNumber}E${episodeNumber}`
+              title.classList.add('title')
+
+              //image
+              const image = document.createElement('img');
+              image.src = `${data[i].image.medium}`
+              
+              
+              //summary of each movie
+              const summary = document.createElement('p');
+              summary.innerText = `${(data[i].summary).replaceAll('<p>', '').replaceAll('</p>', '')}`
+              summary.classList.add('summary')
+
+            
+              
+              
+
+          //     <div class="header">
+          // <select name="shows" id="selectShows">
+          // </select>
+          // <label for="episodes">Choose an episode:</label>
+
+          // <select name="episodes" id="searchEpisodes">
+          // </select>
+          
+          // <input type="text" id="search" placeholder="Search By keyWord...">
+          // <p id='number-of-display'>sfsfsf</p>
+          
+      //  </div>
+
+              
+              
+              // add the title, image and summary to each card div
+              card.appendChild(title);
+              card.appendChild(image)
+              card.appendChild(summary);
+
+              episodeEl.appendChild(card);
+              // episodeEl.appendChild(header)
+              root.appendChild(episodeEl);
+
+             
+
+      }
+    
+    
+}
+
+function renderAllShows(shows) {
+  const showEl = document.createElement('div')
+  
+  for (let i=0; i<shows.length; i++) {
+      totalDisplay = shows.length;
+      const showCard = document.createElement('div');
+      showCard.classList.add('show-card')
+
+      const showName = document.createElement('h1');
+      showName.innerText = shows[i].name;
+      
+      let show_id = shows[i].id
+      
+      showName.addEventListener('click', () => {
+        console.log(show_id)
+        fetchAndRenderAllEpisodesByShowID(show_id)
+      })
+      
+      const showImage = document.createElement('img');
+      showImage.src = shows[i].image['medium']
+
+      const showDetail = document.createElement('p');
+      showDetail.innerText = shows[i].summary.replace('<p><b>', " ").replace('</b>', " ").replace('</p>', '');
+
+      const miniDetailsEl = document.createElement('div');
+      const genreEl = document.createElement('h6');
+      let genreNames = '';
+      shows[i].genres.forEach(genre => genreNames += genre + ' |')
+      genreEl.innerText = `Genres: ${genreNames}`;
+      const statusEl = document.createElement('h6');
+      statusEl.innerText = `Status ${shows[i].status}`;
+
+      const ratingEl = document.createElement('h6');
+      ratingEl.innerText = `Rating: ${shows[i].rating.average}` 
+
+      const runtimeEl = document.createElement('h6');
+      runtimeEl.innerText = `Runtime: ${shows[i].runtime}`;
+
+      const showOption = document.createElement('option');
+      showOption.value = shows[i].name;
+      showOption.innerText = shows[i].name;
+
+        //sort all the episodes name in the select bar alphabetically
+        shows.sort((showA, showB) => {
+          const {name: nameA } = showA;
+          const {name: nameB } = showB;
+
+          if (nameA.toLowerCase() < nameB.toLowerCase()) {
+            return -1
+          } else {
+            return 0;
+          }
+        })
+
+      selectShowsEl.appendChild(showOption)
+
+      
+      miniDetailsEl.appendChild(genreEl)
+      miniDetailsEl.appendChild(statusEl)
+      miniDetailsEl.appendChild(statusEl)
+      miniDetailsEl.appendChild(ratingEl)
+      miniDetailsEl.appendChild(runtimeEl)
+
+      
+      showCard.appendChild(showName)
+      showCard.appendChild(showImage)
+      showCard.appendChild(showDetail)
+      showCard.appendChild(miniDetailsEl)
+      
+
+      
+      //name, image, summary, genres, status, rating, and runtime.
+      showEl.appendChild(showCard)
+      root.appendChild(showEl)
+      
+      searchEl.addEventListener('keypress', (e) => {
+      
+      if (e.key === 'Enter') {
+        root.innerHTML = ' '
+        const searchValue = e.target.value;
+        const filteredSearch = searchShowByNameGenreOrSummary(shows, searchValue)
+        
+       
+          renderAllShows(filteredSearch)
+        
+      }  
 })
-
   
 
+  }
+}
 
 
-
-
+function searchShowByNameGenreOrSummary(data, searchTerm) {
+  const filteredDataArrayForSearchValue = data.filter(show => {
+    return show.name.includes(searchTerm) || show.genres.includes(searchTerm) || show.summary.includes(searchTerm)
+  })
   
+  return filteredDataArrayForSearchValue
+}
 
 
 
-
-
-
-
-
-
-
-
-
-  
-
-
-
-
-
-
-
-
+function showEpisodesOfSelectedShow(data) {
+  selectShowsEl.addEventListener('change', (e) => {
+    searchedShowName = e.target.value;
+    const filteredShows = data.filter(show => {
+      return show.name === searchedShowName
+    })
+    filteredShows.map(filteredShow => {
+      show_id = filteredShow.id
+    })
+    console.log(show_id);
+    fetchAndRenderAllEpisodesByShowID(show_id)
+    
+  }) 
+}

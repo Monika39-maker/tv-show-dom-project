@@ -9,29 +9,21 @@
   </head>
 
   <body>
-    <div class="header">
-      <label for="episodes">Choose an episode:</label>
+    <div id="header">
+      <input id='search' type="search" placeholder="Search by keyterm...">
+      <select name="show" id="shows"></select>
+      <p id="displayNumber"></p>
+    </div>
+    <!-- <div id="all-episodes-header">jnjknjsn</div> -->
+    
+    <div id="root">
 
-      <select name="episodes" id="episodes">
-        <!-- <option value="volvo">Volvo</option>
-        <option value="saab">Saab</option>
-        <option value="mercedes">Mercedes</option>
-        <option value="audi">Audi</option> -->
-      </select>
-      <input type="text" id="search" placeholder="Search ...">
-      <p id='number-of-display'></p>
       
     </div>
     
-    <div id="root">
       
-    </div>
+      
     <small>The data is available at <a href="https://www.tvmaze.com/api#licensing" target="_blank">TVMaze.com</a></small>
-
-    <!-- Loads a provided function called getAllEpisodes() which returns all episodes -->
-    <script src="episodes.js"></script>
-
-    <!-- Loads YOUR javascript code -->
     <script src="script.js"></script>
   </body>
 </html>

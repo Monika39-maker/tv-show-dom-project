@@ -25,3 +25,24 @@
 .hide {
   display: none;
 }
+.show-card {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+
+}
+.show-card h1 {
+  width: 100vw;
+}
+.show-card img {
+  height: 100px;
+  width: 100px;
+}
+.show-card p {
+  font-size: 1rem;
+}
+.hide {
+  display: none;
+}
+
