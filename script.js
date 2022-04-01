@@ -89,21 +89,7 @@ function renderAllEpisodesFromAShow(data) {
               summary.classList.add('summary')
 
             
-              
-              
-
-          //     <div class="header">
-          // <select name="shows" id="selectShows">
-          // </select>
-          // <label for="episodes">Choose an episode:</label>
-
-          // <select name="episodes" id="searchEpisodes">
-          // </select>
-          
-          // <input type="text" id="search" placeholder="Search By keyWord...">
-          // <p id='number-of-display'>sfsfsf</p>
-          
-      //  </div>
+    
 
               
               
