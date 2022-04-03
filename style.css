@@ -1,13 +1,26 @@
+body {
+  background: #0D1933;
+}
 #root {
-  background: cadetblue;
+  background: #807413;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   align-items: center;
 
 }
+.shows {
+  width: 80%;
+  margin-top: 5%;
+}
+.episodes {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: center;
+  align-items: center;
+}
 .card {
-  background-color: wheat;
+  background-color: #80522D;
   margin: 1rem;
   width: 300px;
   height: auto;
@@ -15,6 +28,9 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  padding: 5px;
+  box-shadow: 15px 15px rgba(51, 47, 10, 0.5);
+
 }
 .header {
   display: flex;
@@ -26,23 +42,76 @@
   display: none;
 }
 .show-card {
+  background: #80522D;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  width: 100%;
+  width: 80%;
+  margin: 15px;
+  padding: 10px;
 
 }
 .show-card h1 {
-  width: 100vw;
+  text-align: center;
+  cursor: pointer;
+  color: #FFFFFF;
+  background: #0D1933;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  max-height: 50px;
+  padding: 10px;
+  transition: transform 2s ease-in-out;
+  font-size: 0.75rem;
+  
+
+}
+.show-card h1:hover {
+  transform: scale(1.15);
+  
 }
 .show-card img {
-  height: 100px;
-  width: 100px;
+  height: 35%;
+  width: 35%;
+  margin-right: auto;
+  margin-left: auto;
+}
+.show-card div {
+  background: #0D1933;
+  margin: 5%;
+  padding: 15px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  box-shadow: 15px 15px rgba(51, 47, 10, 0.5);
 }
 .show-card p {
   font-size: 1rem;
+  color: #FFFFFF;
 }
 .hide {
   display: none;
+}
+#search {
+  width: 300px;
+  height: 50px;
+ 
+}
+select {
+  width: 300px;
+  height: 50px;
+}
+#displayNumber {
+  color: white;
+}
+.back-button {
+  background: #80522D;
+  position: absolute;
+  width: 100px;
+  height: 50px;
+  right: 50px;
+  top: 10px;
+  cursor: pointer;
+  border: none;
+
 }
 

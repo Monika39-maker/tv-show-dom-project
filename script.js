@@ -35,9 +35,11 @@ async function fetchAndRenderAllEpisodesByShowID(id) {
 
 function renderAllEpisodesFromAShow(data) {
   root.innerHTML = ""
-  const episodeEl = document.createElement('div')
+  const episodeEl = document.createElement('div');
+  episodeEl.classList.add('episodes')
   const backBtn = document.createElement('button');
-  backBtn.innerText = "Go Back"
+  backBtn.innerText = "Go Back";
+  backBtn.classList.add('back-button');
   episodeEl.appendChild(backBtn);
 
   backBtn.addEventListener('click', () => {
@@ -48,11 +50,11 @@ function renderAllEpisodesFromAShow(data) {
     //select option and searchBar in the episodes div
           const header = document.createElement('div');
           header.classList.add('header');
-          const selectShowOption = document.createElement('select');
-          selectShowOption.name = 'shows';
-          selectShowOption.id = 'selectShows';
+          // const selectShowOption = document.createElement('select');
+          // selectShowOption.name = 'shows';
+          // selectShowOption.id = 'selectShows';
 
-          header.appendChild(selectShowOption);
+          // header.appendChild(selectShowOption);
           episodeEl.appendChild(header);
 
 
@@ -110,7 +112,9 @@ function renderAllEpisodesFromAShow(data) {
 }
 
 function renderAllShows(shows) {
-  const showEl = document.createElement('div')
+  const showEl = document.createElement('div');
+  showEl.classList.add('shows')
+
   
   for (let i=0; i<shows.length; i++) {
       totalDisplay = shows.length;
@@ -173,10 +177,11 @@ function renderAllShows(shows) {
       miniDetailsEl.appendChild(runtimeEl)
 
       
-      showCard.appendChild(showName)
-      showCard.appendChild(showImage)
+      showCard.appendChild(showName);
+      showCard.appendChild(showImage);
+      
+      showCard.appendChild(miniDetailsEl);
       showCard.appendChild(showDetail)
-      showCard.appendChild(miniDetailsEl)
       
 
       
